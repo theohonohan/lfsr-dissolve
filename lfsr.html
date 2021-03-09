@@ -1,0 +1,28 @@
+<html>
+<head><title>LFSR Dissolve</title></head>
+<canvas id="myCanvas" width="300" height="300"></canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+var lfsr = 1;
+var feed = 0;
+
+feed |= 1 << 15;
+feed |= 1 << 13;
+feed |= 1 << 12;
+feed |= 1 << 10;
+
+function runlfsr() {
+    for(var i = 0; i < 64; i++)
+    {
+        if (lfsr & 1) { lfsr = (lfsr >> 1) ^ feed; }
+        else { lfsr = (lfsr >> 1); }
+        ctx.fillRect((lfsr & 0xFF), ((lfsr >> 8) & 0xFF), 1, 1);
+    }    
+    setTimeout(runlfsr, 10);
+}
+
+setTimeout(runlfsr, 10);
+</script>
+</html>
